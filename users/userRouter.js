@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.post('/', validateUser, async (req, res) => {
 try{
-    const user = await Post.insert(req.body);
+    const user = await Users.insert(req.body);
     res.status(201).json(user);
 
 }catch (error) {
