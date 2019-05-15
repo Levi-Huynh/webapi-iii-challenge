@@ -1,10 +1,11 @@
 const express = require('express');
 const Users = require('./userDb.js');
+const Post = require('../posts/postDb.js');
 const router = express.Router();
 
 router.post('/', validateUser, async (req, res) => {
 try{
-    const user = await Users.insert(req.body);
+    const user = await Post.insert(req.body);
     res.status(201).json(user);
 
 }catch (error) {
@@ -18,12 +19,19 @@ try{
 
 //where is the correct userDB.js function for the below?
 
-// router.post('/:id/posts', async (req, res) => {
-// const userPost= {...req.body, userId: req.params.id };
-// try{
-//     const post = await post.
-// }
-// });
+router.post('/:id/posts', async (req, res) => {
+const userPost= {...req.body, user_id: req.params.id };
+try{
+    const user = await Post.insert(userPost);
+    res.status(201).json(user);
+}catch (error) {
+    // log error to database
+    console.log(error);
+    res.status(500).json({
+      message: 'Error adding post',
+    });
+  }
+});
 
 router.get('/', async (req, res) => {
     try{
